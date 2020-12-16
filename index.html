@@ -25,14 +25,14 @@
         <div id="membersresult" align="center"></div>
         <table id="members" border="1" align="center"></table>
     </div>
-    <div id="loader" class="loader" style="display:none"></div>
+    <div id="loader" class="loader" style="display:none" align="center"></div>
     <span id="status"></span>
     <script src="script.js"></script>
     <script>
         const fragment = new URLSearchParams(window.location.hash.slice(1));
 
         if (fragment.has("access_token")) {
-            document.getElementById('loader').style.display = "block"
+            document.getElementById('loader').style.display = "inline-block"
             const accessToken = fragment.get("access_token");
             const tokenType = fragment.get("token_type");
 
