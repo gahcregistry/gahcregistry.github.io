@@ -1,1 +1,1 @@
-var apiorigin = "https://0.tcp.ngrok.io:19164"
+var apiorigin = "https://c9189dfd7142.ngrok.io"
