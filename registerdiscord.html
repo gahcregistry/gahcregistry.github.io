@@ -88,8 +88,8 @@
                     document.getElementById('loader').style.display = "none"
                 }
             };
-            xhr.withCredentials = true;
             xhr.open("POST", apiorigin+"/api/gahcregistry/v1/auth/register", true);
+            xhr.withCredentials = true;
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send("password="+encodeURIComponent("discord"));
         })
