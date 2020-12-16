@@ -120,6 +120,7 @@
             }
         };
         xhr.open("GET", apiorigin+"/api/gahcregistry/v1/members", true);
+        xhr.setRequestHeader("Authorization", getCookie("token"))
         xhr.send();
 
     </script>
