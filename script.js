@@ -7,6 +7,8 @@ xhrsb.onreadystatechange = function () {
             //document.getElementById("reg").style.display = "none";
             document.getElementById("login").style.display = "none";
             document.getElementById("logout").style.display = "inline-block";
+            document.getElementById("reg").style.display = "none";
+            document.getElementById("unreg").style.display = "inline-block";
             document.getElementById("status").innerHTML = `Logged in as <b>${getCookie("usernamecache")}</b>`;
         }
     }
