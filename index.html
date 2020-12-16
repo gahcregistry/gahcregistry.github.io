@@ -39,7 +39,8 @@
             fetch(apiorigin+'/api/gahcregistry/v1/auth/check', {
                 headers: {
                     authorization: `${tokenType} ${accessToken}`
-                }
+                },
+                withCredentials: "include"
             })
                 .then(res => res.json())
                 .then(response => {
