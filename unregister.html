@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Register for GaHC
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="sessionbar">
+    </div>
+    <div id="main">
+        <h1>Are you sure you want to unregister?</h1>
+        <hr>
+        <a href="."><button>No</button></a>
+        <a href="."><button id="yes">Yes</button></a>
+        <br>
+        <span id="result"></span>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById("yes").addEventListener("click", function () {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Typical action to be performed when the document is ready:
+                    document.getElementById("result").innerHTML = xhr.responseText;
+                    if ( xhr.responseText == "Successfully unregistered") {
+                        location.replace("logout")
+                    }
+                }
+            };
+            xhr.open("GET", "/api/gahcregistry/v1/auth/unregister", true);
+            xhr.send();
+        })
+    </script>
+</body>
+
+</html>

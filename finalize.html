@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Register with Discord
+    </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="api.js"></script>
+</head>
+<style>
+    
+</style>
+
+<body>
+    <div id="sessionbar">
+    </div>
+    <div id="main">
+        <h1>
+            Registering with Discord
+        </h1>
+        <hr>
+        <input id="password" type="password" placeholder="Choose a password">
+        <button id="submit">Register</button>
+        <span id="result"></span>
+        <br>
+        <div class="loader" id="loader" style="display: none"></div>
+    </div>
+    <script>
+        document.getElementById("submit").addEventListener("click", function () {
+            document.getElementById("loader").style.display = "block"
+            var pass = document.getElementById("password").value
+            var xhr = new XMLHttpRequest()
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Typical action to be performed when the document is ready:
+                    document.getElementById("result").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open("POST", apiorigin+"/api/gahcregistry/v1/auth/register", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("password="+encodeURIComponent(pass));
+        })
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

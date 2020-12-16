@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Register for GaHC
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="sessionbar">
+    </div>
+    <div id="main" style="display:none">
+        <h1>
+            Register with:
+        </h1>
+        <hr>
+        <a
+            href="https://discord.com/api/oauth2/authorize?client_id=770386507050909736&redirect_uri=http%3A%2F%2Flocalhost%2Fgahcregistry%2Fregisterdiscord&response_type=token&scope=identify%20email%20guilds.join"><img
+                src="https://registry.gahc.tk/assets/discord.png"></a>
+        <br>
+        <script src="script.js"></script>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        /*if (!getCookie("token")) {
+            document.getElementById("main").innerHTML = "You must be logged in to register!"
+            document.getElementById("main").style.display="block"
+            location.replace("login")
+        }*/
+        document.getElementById("main").style.display="block"
+    </script>
+</body>
+
+</html>

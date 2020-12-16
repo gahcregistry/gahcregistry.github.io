@@ -1,1 +1,127 @@
-test
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Welcome to GaHC Registry
+    </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+    <script src="api.js"></script>
+</head>
+
+<body>
+    <div id="sessionbar">
+    </div>
+    <div id="main">
+        <h1>
+            Welcome to GaHC Registry
+        </h1>
+        <hr>
+        <h2>Dashboard</h2>
+        <h3>Registry Members</h3>
+        <div id="membersloader" class="loader"></div>
+        <div id="membersresult"></div>
+        <table id="members"></table>
+    </div>
+    <div id="loader" class="loader" style="display:none"></div>
+    <span id="status"></span>
+    <script src="script.js"></script>
+    <script>
+        const fragment = new URLSearchParams(window.location.hash.slice(1));
+
+        if (fragment.has("access_token")) {
+            document.getElementById('loader').style.display = "block"
+            const accessToken = fragment.get("access_token");
+            const tokenType = fragment.get("token_type");
+
+            fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `${tokenType} ${accessToken}`
+                }
+            })
+                .then(res => res.json())
+                .then(response => {
+                    console.log("Log In")
+                    const { username, discriminator } = response;
+                    setCookie("usernamecache", `${username}#${discriminator}`, 7);
+                    setCookie("token", accessToken, 7);
+                    localStorage.setItem("usernamecache", getCookie("usernamecache"))
+                    localStorage.setItem("token", getCookie("token"))
+                    //document.getElementById('result').innerHTML = "Successfully logged in, registering...";
+                    document.getElementById('loader').style.display = "none"
+                    //document.getElementById('main').style.display = "none"
+                    //document.getElementById('finalize').style.display = "block"
+                    location.replace(".")
+                })
+                .catch(e => {
+                    //document.getElementById('result').innerHTML = "Failed to Register with Discord: " + e;
+                    //document.getElementById('loader').style.display = "none"
+                });
+
+        }
+        function constructTable(selector) {
+
+            // Getting the all column names 
+            var cols = Headers(list, selector);
+
+            // Traversing the JSON data 
+            for (var i = 0; i < list.length; i++) {
+                var row = $('<tr/>');
+                for (var colIndex = 0; colIndex < cols.length; colIndex++) {
+                    var val = list[i][cols[colIndex]];
+
+                    // If there is any key, which is matching 
+                    // with the column name 
+                    if (val == null) val = "";
+                    row.append($('<td/>').html(val));
+                }
+
+                // Adding each row to the table 
+                $(selector).append(row);
+            }
+        }
+
+        function Headers(list, selector) {
+            var columns = [];
+            var header = $('<tr/>');
+
+            for (var i = 0; i < list.length; i++) {
+                var row = list[i];
+
+                for (var k in row) {
+                    if ($.inArray(k, columns) == -1) {
+                        columns.push(k);
+
+                        // Creating the header 
+                        header.append($('<th/>').html(k));
+                    }
+                }
+            }
+
+            // Appending the header to the table 
+            $(selector).append(header);
+            return columns;
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && (this.status == 200 || this.status == 401 || this.status == 403)) {
+                // Typical action to be performed when the document is ready:
+                if (JSON.parse(xhr.responseText).error) {
+                    document.getElementById("membersresult").innerHTML = JSON.parse(xhr.responseText).error
+                    document.getElementById("membersloader").style.display = "none"
+                } else {
+                    list = JSON.parse(xhr.responseText).members
+                    document.getElementById("membersloader").style.display = "none"
+                    constructTable("#members")
+                }
+            }
+        };
+        xhr.open("GET", apiorigin+"/api/gahcregistry/v1/members", true);
+        xhr.send();
+
+    </script>
+</body>
+
+</html>

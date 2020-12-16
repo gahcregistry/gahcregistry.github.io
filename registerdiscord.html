@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Register with Discord
+    </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<style>
+    
+</style>
+
+<body>
+    <div id="sessionbar">
+    </div>
+    <div id="main">
+        <h1>
+            Registering with Discord
+        </h1>
+        <hr>
+        <span id="result"></span>
+        <br>
+        <div class="loader" id="loader"></div>
+    </div>
+    <div id="finalize" style="display:none">
+        <h1>
+            Registering with Discord
+        </h1>
+        <hr>
+        <input id="password" type="password" placeholder="Choose a password">
+        <button id="submit">Register</button>
+        <span id="result1"></span>
+        <br>
+        <div class="loader" id="loader" style="display: none"></div>
+    </div>
+    <script>
+        const fragment = new URLSearchParams(window.location.hash.slice(1));
+
+        if (fragment.has("access_token")) {
+            const accessToken = fragment.get("access_token");
+            const tokenType = fragment.get("token_type");
+
+            fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `${tokenType} ${accessToken}`
+                }
+            })
+                .then(res => res.json())
+                .then(response => {
+                    const { username, discriminator } = response;
+                    setCookie("usernamecache", `${username}#${discriminator}`, 7);
+                    setCookie("token", accessToken, 7);
+                    document.getElementById('result').innerHTML = "Successfully logged in, registering...";
+                    document.getElementById('loader').style.display = "none"
+                    //document.getElementById('main').style.display = "none"
+                    document.getElementById('password').style.display = "none"
+                    document.getElementById('submit').style.display = "none"
+                    document.getElementById('finalize').style.display = "block"
+                    document.getElementById("submit").click()
+                })
+                .catch(e => {
+                    document.getElementById('result').innerHTML = "Failed to Register with Discord: " + e;
+                    document.getElementById('loader').style.display = "none"
+                });
+
+        }
+        else {
+            document.getElementById('result').innerHTML = "Failed to Register with Discord";
+            document.getElementById('loader').style.display = "none"
+        }
+        document.getElementById("submit").addEventListener("click", function () {
+            document.getElementById("loader").style.display = "block"
+            var pass = document.getElementById("password").value
+            var xhr = new XMLHttpRequest()
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Typical action to be performed when the document is ready:
+                    document.getElementById("result1").innerHTML = xhr.responseText;
+                    if (xhr.responseText == "Successful Registration!") {
+                        localStorage.setItem("usernamecache", getCookie("usernamecache"))
+                        localStorage.setItem("token", getCookie("token"))
+                        document.getElementById('loader').style.display = "none"
+                        location.replace(".")
+                    }
+                    document.getElementById('loader').style.display = "none"
+                }
+            };
+            xhr.open("POST", apiorigin+"/api/gahcregistry/v1/auth/register", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("password="+encodeURIComponent("discord"));
+        })
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
