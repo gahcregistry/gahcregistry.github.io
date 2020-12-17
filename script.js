@@ -43,3 +43,32 @@ isregxhr.onreadystatechange = function () {
 isregxhr.open("GET", apiorigin+"/api/gahcregistry/v1/auth/isregistered")
 isregxhr.setRequestHeader("Authorization", getCookie("token"))
 isregxhr.send()
+function getHref(s, pagearray, index) {
+    var result = location.origin;
+    for(var i = 0; i<index+1; i++) {
+        result+=pagearray[index]
+    }
+    return result
+}
+var pagination = document.createElement("ul")
+pagination.setAttribute("class", "breadcrumb")
+var pagelist = [{"name": "Home", "href": "/"}]
+var index = 0
+var pagearray = window.location.href.split('#')[0].split("/").splice(3)
+pagearray.forEach(s => {
+    var section = {
+        "name": s,
+        "href": getHref(s, pagearray, index)
+    }
+    pagelist.push(section)
+    index++
+})
+pagelist.forEach(pl => {
+    var e = document.createElement("li")
+    var a = document.createElement("a")
+    a.href = pl.href
+    a.innerHTML = pl.name
+    e.appendChild(a)
+    pagination.appendChild(e)
+})
+document.body.appendChild(pagination)
