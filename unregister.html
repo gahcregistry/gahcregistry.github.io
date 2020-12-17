@@ -33,7 +33,7 @@
                     }
                 }
             };
-            xhr.open("POST", "/api/gahcregistry/v1/auth/unregister", true);
+            xhr.open("POST", apiorigin+"/api/gahcregistry/v1/auth/unregister", true);
             xhr.setRequestHeader("Authorization", getCookie("token"))
             xhr.send("token="+getCookie("token"));
         })
