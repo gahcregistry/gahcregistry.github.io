@@ -32,9 +32,9 @@
                     }
                 }
             };
-            xhr.open("GET", "/api/gahcregistry/v1/auth/unregister", true);
+            xhr.open("POST", "/api/gahcregistry/v1/auth/unregister", true);
             xhr.setRequestHeader("Authorization", getCookie("token"))
-            xhr.send();
+            xhr.send("token="+getCookie("token"));
         })
     </script>
 </body>

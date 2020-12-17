@@ -7,8 +7,6 @@ xhrsb.onreadystatechange = function () {
             //document.getElementById("reg").style.display = "none";
             document.getElementById("login").style.display = "none";
             document.getElementById("logout").style.display = "inline-block";
-            document.getElementById("reg").style.display = "none";
-            document.getElementById("unreg").style.display = "inline-block";
             document.getElementById("status").innerHTML = `Logged in as <b>${getCookie("usernamecache")}</b>`;
         }
     }
@@ -33,3 +31,14 @@ function setCookie(cname, cvalue, exdays) {
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;SameSite=None;Secure";
 }
+var isregxhr = new XMLHttpRequest()
+isregxhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        if (isregxhr.responseText == "true") {
+            document.getElementById("reg").style.display = "none";
+            document.getElementById("unreg").style.display = "inline-block";
+        }
+    }
+};
+isregxhr.open("GET", apiorigin+"/api/gahcregistry/v1/auth/isregistered")
+isregxhr.send()
