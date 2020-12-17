@@ -41,4 +41,5 @@ isregxhr.onreadystatechange = function () {
     }
 };
 isregxhr.open("GET", apiorigin+"/api/gahcregistry/v1/auth/isregistered")
+isregxhr.setRequestHeader("Authorization", getCookie("token"))
 isregxhr.send()
