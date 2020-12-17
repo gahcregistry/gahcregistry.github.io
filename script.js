@@ -46,7 +46,7 @@ isregxhr.send()
 function getHref(s, pagearray, index) {
     var result = location.origin;
     for(var i = 0; i<index+1; i++) {
-        result+=pagearray[index]
+        result+="/"+pagearray[index]
     }
     return result
 }
