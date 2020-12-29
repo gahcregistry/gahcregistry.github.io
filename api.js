@@ -1,1 +1,1 @@
-var apiorigin = "https://b9e4f137f8ce.ngrok.io"
+var apiorigin = "https://api.registry.gahc.tk"
